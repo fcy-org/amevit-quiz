@@ -272,6 +272,10 @@ function trackEvent(event: string, params?: Record<string, unknown>) {
   window.fbq?.("track", event, params);
 }
 
+function trackCustomEvent(event: string, params?: Record<string, unknown>) {
+  window.fbq?.("trackCustom", event, params);
+}
+
 export function Quiz() {
   const [stage, setStage] = useState<Stage>("intro");
   const [step, setStep] = useState(0);
@@ -295,8 +299,12 @@ export function Quiz() {
   }, [answers, intensity]);
 
   useEffect(() => {
-    if (stage === "questions" && step === 0) {
-      trackEvent("ViewContent", { content_name: "Quiz iniciado" });
+    if (stage === "questions") {
+      if (step === 0) trackEvent("ViewContent", { content_name: "Quiz iniciado" });
+      trackCustomEvent(`Etapa_${step + 1}`, {
+        etapa: step + 1,
+        pergunta: QUESTIONS[step].subtitle,
+      });
     }
     if (stage === "result") {
       trackEvent("Lead", { content_name: "Quiz concluído" });
