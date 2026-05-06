@@ -243,7 +243,7 @@ const MAGNESIUM_OPTIONS = {
   },
 } as const;
 
-const WHATSAPP_PHONE = "5511999999999";
+const WHATSAPP_PHONE = "558694876425";
 const OFFER_DURATION_MS = 5 * 60 * 60 * 1000;
 
 function formatPrice(value: number) {
