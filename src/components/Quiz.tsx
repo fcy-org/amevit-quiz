@@ -307,7 +307,7 @@ export function Quiz() {
       });
     }
     if (stage === "result") {
-      trackEvent("Lead", { content_name: "Quiz concluído" });
+      trackEvent("ViewContent", { content_name: "Resultado exibido" });
     }
   }, [stage, step]);
 
@@ -787,7 +787,10 @@ function Result({
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => trackEvent("Contact", { content_name: "WhatsApp especialista" })}
+            onClick={() => {
+              trackEvent("Lead", { content_name: "WhatsApp especialista" });
+              trackEvent("Contact", { content_name: "WhatsApp especialista" });
+            }}
             className="inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-brand to-brand-red px-8 py-5 text-base font-semibold text-white shadow-[0_0_50px_-10px] shadow-brand-red-glow transition-all hover:shadow-[0_0_70px_-5px] hover:shadow-brand-red-glow"
           >
             <MessageCircle className="h-5 w-5" />
