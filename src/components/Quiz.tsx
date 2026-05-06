@@ -262,6 +262,16 @@ function formatOfferTime(milliseconds: number) {
   return [hours, minutes, seconds].map((value) => String(value).padStart(2, "0")).join(":");
 }
 
+declare global {
+  interface Window {
+    fbq?: (...args: unknown[]) => void;
+  }
+}
+
+function trackEvent(event: string, params?: Record<string, unknown>) {
+  window.fbq?.("track", event, params);
+}
+
 export function Quiz() {
   const [stage, setStage] = useState<Stage>("intro");
   const [step, setStep] = useState(0);
@@ -283,6 +293,15 @@ export function Quiz() {
 
     return Object.entries(scores).sort((a, b) => b[1] - a[1])[0][0] as SignalCategory;
   }, [answers, intensity]);
+
+  useEffect(() => {
+    if (stage === "questions" && step === 0) {
+      trackEvent("ViewContent", { content_name: "Quiz iniciado" });
+    }
+    if (stage === "result") {
+      trackEvent("Lead", { content_name: "Quiz concluído" });
+    }
+  }, [stage, step]);
 
   function handleAnswer(option: Option) {
     const nextAnswers = [...answers, option];
@@ -760,6 +779,7 @@ function Result({
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackEvent("Contact", { content_name: "WhatsApp especialista" })}
             className="inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-brand to-brand-red px-8 py-5 text-base font-semibold text-white shadow-[0_0_50px_-10px] shadow-brand-red-glow transition-all hover:shadow-[0_0_70px_-5px] hover:shadow-brand-red-glow"
           >
             <MessageCircle className="h-5 w-5" />
