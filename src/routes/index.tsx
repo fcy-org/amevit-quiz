@@ -14,7 +14,8 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "Amevit · Teste de cansaço mental" },
       {
         property: "og:description",
-        content: "Quiz rápido com resultado personalizado e desconto especial para falar com um especialista.",
+        content:
+          "Quiz rápido com resultado personalizado e desconto especial para falar com um especialista.",
       },
     ],
   }),

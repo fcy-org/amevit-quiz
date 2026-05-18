@@ -6,5 +6,5 @@ import { Quiz } from "./components/Quiz";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Quiz />
-  </StrictMode>
+  </StrictMode>,
 );
